@@ -1,0 +1,345 @@
+$date
+	Mon Jul  9 13:45:26 2018
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module TestBench $end
+$var reg 1 ! CLK $end
+$var reg 1 " RST $end
+$var integer 32 # count [31:0] $end
+$var integer 32 $ end_count [31:0] $end
+$var integer 32 % handle [31:0] $end
+$scope module cpu $end
+$var wire 1 & clk_i $end
+$var wire 1 ' rst_i $end
+$scope module PC $end
+$var wire 1 ( clk_i $end
+$var wire 32 ) pc_in_i [31:0] $end
+$var wire 1 * rst_i $end
+$var reg 32 + pc_out_o [31:0] $end
+$upscope $end
+$scope module Adder1 $end
+$var wire 32 , src1_i [31:0] $end
+$var wire 32 - src2_i [31:0] $end
+$var wire 32 . sum_o [31:0] $end
+$upscope $end
+$scope module IM $end
+$var wire 32 / pc_addr_i [31:0] $end
+$var integer 32 0 i [31:0] $end
+$var reg 32 1 instr_o [31:0] $end
+$upscope $end
+$scope module Mux_Write_Reg $end
+$var wire 5 2 data0_i [4:0] $end
+$var wire 5 3 data1_i [4:0] $end
+$var wire 1 4 select_i $end
+$var reg 5 5 data_o [4:0] $end
+$upscope $end
+$scope module RF $end
+$var wire 5 6 RDaddr_i [4:0] $end
+$var wire 32 7 RDdata_i [31:0] $end
+$var wire 5 8 RSaddr_i [4:0] $end
+$var wire 32 9 RSdata_o [31:0] $end
+$var wire 5 : RTaddr_i [4:0] $end
+$var wire 32 ; RTdata_o [31:0] $end
+$var wire 1 < RegWrite_i $end
+$var wire 1 = clk_i $end
+$var wire 1 > rst_i $end
+$upscope $end
+$scope module Decoder $end
+$var wire 6 ? instr_op_i [5:0] $end
+$var reg 1 @ ALUSrc_o $end
+$var reg 3 A ALU_op_o [2:0] $end
+$var reg 1 B Branch_o $end
+$var reg 1 C RegDst_o $end
+$var reg 1 D RegWrite_o $end
+$upscope $end
+$scope module AC $end
+$var wire 3 E ALUOp_i [2:0] $end
+$var wire 6 F funct_i [5:0] $end
+$var reg 4 G ALUCtrl_o [3:0] $end
+$upscope $end
+$scope module SE $end
+$var wire 16 H data_i [15:0] $end
+$var reg 32 I data_o [31:0] $end
+$upscope $end
+$scope module Mux_ALUSrc $end
+$var wire 32 J data0_i [31:0] $end
+$var wire 32 K data1_i [31:0] $end
+$var wire 1 L select_i $end
+$var reg 32 M data_o [31:0] $end
+$upscope $end
+$scope module ALU $end
+$var wire 4 N ctrl_i [3:0] $end
+$var wire 32 O src1_i [31:0] $end
+$var wire 32 P src2_i [31:0] $end
+$var wire 1 Q zero_o $end
+$var reg 32 R result_o [31:0] $end
+$upscope $end
+$scope module Adder2 $end
+$var wire 32 S src1_i [31:0] $end
+$var wire 32 T src2_i [31:0] $end
+$var wire 32 U sum_o [31:0] $end
+$upscope $end
+$scope module Shifter $end
+$var wire 32 V data_i [31:0] $end
+$var wire 32 W data_o [31:0] $end
+$upscope $end
+$scope module Mux_PC_Source $end
+$var wire 32 X data0_i [31:0] $end
+$var wire 32 Y data1_i [31:0] $end
+$var wire 1 Z select_i $end
+$var reg 32 [ data_o [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx [
+zZ
+bz Y
+bz X
+bz W
+bz V
+bz U
+bz T
+bz S
+bx R
+zQ
+bz P
+bz O
+bz N
+bx M
+zL
+bz K
+bz J
+bx I
+bz H
+bx G
+bz F
+bz E
+xD
+xC
+xB
+bx A
+x@
+bz ?
+z>
+z=
+z<
+bx ;
+bz :
+bx 9
+bz 8
+bz 7
+bz 6
+bx 5
+z4
+bz 3
+bz 2
+bx 1
+b100000 0
+bz /
+bz .
+bz -
+bz ,
+bx +
+z*
+bz )
+z(
+0'
+0&
+b10 %
+b11001 $
+b0 #
+0"
+0!
+$end
+#5
+b1 #
+1!
+1&
+#10
+0!
+0&
+1"
+1'
+#15
+b10 #
+1!
+1&
+#20
+0!
+0&
+#25
+b11 #
+1!
+1&
+#30
+0!
+0&
+#35
+b100 #
+1!
+1&
+#40
+0!
+0&
+#45
+b101 #
+1!
+1&
+#50
+0!
+0&
+#55
+b110 #
+1!
+1&
+#60
+0!
+0&
+#65
+b111 #
+1!
+1&
+#70
+0!
+0&
+#75
+b1000 #
+1!
+1&
+#80
+0!
+0&
+#85
+b1001 #
+1!
+1&
+#90
+0!
+0&
+#95
+b1010 #
+1!
+1&
+#100
+0!
+0&
+#105
+b1011 #
+1!
+1&
+#110
+0!
+0&
+#115
+b1100 #
+1!
+1&
+#120
+0!
+0&
+#125
+b1101 #
+1!
+1&
+#130
+0!
+0&
+#135
+b1110 #
+1!
+1&
+#140
+0!
+0&
+#145
+b1111 #
+1!
+1&
+#150
+0!
+0&
+#155
+b10000 #
+1!
+1&
+#160
+0!
+0&
+#165
+b10001 #
+1!
+1&
+#170
+0!
+0&
+#175
+b10010 #
+1!
+1&
+#180
+0!
+0&
+#185
+b10011 #
+1!
+1&
+#190
+0!
+0&
+#195
+b10100 #
+1!
+1&
+#200
+0!
+0&
+#205
+b10101 #
+1!
+1&
+#210
+0!
+0&
+#215
+b10110 #
+1!
+1&
+#220
+0!
+0&
+#225
+b10111 #
+1!
+1&
+#230
+0!
+0&
+#235
+b11000 #
+1!
+1&
+#240
+0!
+0&
+#245
+b11001 #
+1!
+1&
+#250
+0!
+0&
+#255
+b11010 #
+1!
+1&
+#260
+0!
+0&

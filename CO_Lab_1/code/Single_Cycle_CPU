@@ -1,0 +1,405 @@
+#! /usr/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_7)";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x179a1d0 .scope module, "TestBench" "TestBench" 2 14;
+ .timescale 0 0;
+v0x17bff20_0 .var "CLK", 0 0;
+v0x17bffc0_0 .var "RST", 0 0;
+v0x17c0040_0 .var/i "count", 31 0;
+v0x17c00c0_0 .var/i "end_count", 31 0;
+v0x17c0170_0 .var/i "handle", 31 0;
+E_0x17561b0 .event posedge, v0x17bfdc0_0;
+S_0x1799ee0 .scope module, "cpu" "Simple_Single_CPU" 2 23, 3 11, S_0x179a1d0;
+ .timescale 0 0;
+v0x17bfdc0_0 .net "clk_i", 0 0, v0x17bff20_0; 1 drivers
+v0x17bfe80_0 .net "rst_i", 0 0, v0x17bffc0_0; 1 drivers
+S_0x17bf9e0 .scope module, "PC" "ProgramCounter" 3 24, 4 12, S_0x1799ee0;
+ .timescale 0 0;
+v0x17bfb10_0 .net "clk_i", 0 0, C4<z>; 0 drivers
+v0x17bfbd0_0 .net "pc_in_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x17bfc70_0 .var "pc_out_o", 31 0;
+v0x17bfd10_0 .net "rst_i", 0 0, C4<z>; 0 drivers
+E_0x1784e30 .event posedge, v0x17bfb10_0;
+S_0x17bf6f0 .scope module, "Adder1" "Adder" 3 31, 5 12, S_0x1799ee0;
+ .timescale 0 0;
+v0x17bf7e0_0 .net "src1_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x17bf8a0_0 .net "src2_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x17bf940_0 .net "sum_o", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+S_0x17bf330 .scope module, "IM" "Instr_Memory" 3 37, 6 12, S_0x1799ee0;
+ .timescale 0 0;
+v0x17bf460 .array "Instr_Mem", 31 0, 31 0;
+v0x17bf500_0 .var/i "i", 31 0;
+v0x17bf5a0_0 .var "instr_o", 31 0;
+v0x17bf640_0 .net "pc_addr_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+E_0x17be8c0 .event edge, v0x17bf640_0;
+S_0x17bef30 .scope module, "Mux_Write_Reg" "MUX_2to1" 3 42, 7 12, S_0x1799ee0;
+ .timescale 0 0;
+P_0x17bea18 .param/l "size" 7 19, +C4<0101>;
+v0x17bf0a0_0 .net "data0_i", 4 0, C4<zzzzz>; 0 drivers
+v0x17bf140_0 .net "data1_i", 4 0, C4<zzzzz>; 0 drivers
+v0x17bf1e0_0 .var "data_o", 4 0;
+v0x17bf280_0 .net "select_i", 0 0, C4<z>; 0 drivers
+S_0x17be510 .scope module, "RF" "Reg_File" 3 49, 8 11, S_0x1799ee0;
+ .timescale 0 0;
+L_0x17bed00 .functor BUFZ 32, L_0x1784ce0, C4<00000000000000000000000000000000>, C4<00000000000000000000000000000000>, C4<00000000000000000000000000000000>;
+L_0x17c0340 .functor BUFZ 32, L_0x17c0270, C4<00000000000000000000000000000000>, C4<00000000000000000000000000000000>, C4<00000000000000000000000000000000>;
+v0x17be640_0 .net "RDaddr_i", 4 0, C4<zzzzz>; 0 drivers
+v0x17be700_0 .net "RDdata_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x17be7a0_0 .net "RSaddr_i", 4 0, C4<zzzzz>; 0 drivers
+v0x17be840_0 .net "RSdata_o", 31 0, L_0x17bed00; 1 drivers
+v0x17be8f0_0 .net "RTaddr_i", 4 0, C4<zzzzz>; 0 drivers
+v0x17be990_0 .net "RTdata_o", 31 0, L_0x17c0340; 1 drivers
+v0x17bea70_0 .net "RegWrite_i", 0 0, C4<z>; 0 drivers
+v0x17beb10 .array/s "Reg_File", 31 0, 31 0;
+v0x17bebe0_0 .net *"_s0", 31 0, L_0x1784ce0; 1 drivers
+v0x17bec80_0 .net *"_s4", 31 0, L_0x17c0270; 1 drivers
+v0x17bed80_0 .net "clk_i", 0 0, C4<z>; 0 drivers
+v0x17bee20_0 .net "rst_i", 0 0, C4<z>; 0 drivers
+E_0x17be360 .event posedge, v0x17bed80_0, v0x17bee20_0;
+L_0x1784ce0 .array/port v0x17beb10, C4<zzzzz>;
+L_0x17c0270 .array/port v0x17beb10, C4<zzzzz>;
+S_0x17bdff0 .scope module, "Decoder" "Decoder" 3 61, 9 12, S_0x1799ee0;
+ .timescale 0 0;
+v0x17be0e0_0 .var "ALUSrc_o", 0 0;
+v0x17be1a0_0 .var "ALU_op_o", 2 0;
+v0x17be240_0 .var "Branch_o", 0 0;
+v0x17be2e0_0 .var "RegDst_o", 0 0;
+v0x17be390_0 .var "RegWrite_o", 0 0;
+v0x17be430_0 .net "instr_op_i", 5 0, C4<zzzzzz>; 0 drivers
+S_0x17bdd00 .scope module, "AC" "ALU_Ctrl" 3 70, 10 12, S_0x1799ee0;
+ .timescale 0 0;
+v0x17bddf0_0 .var "ALUCtrl_o", 3 0;
+v0x17bdeb0_0 .net "ALUOp_i", 2 0, C4<zzz>; 0 drivers
+v0x17bdf50_0 .net "funct_i", 5 0, C4<zzzzzz>; 0 drivers
+S_0x17bdab0 .scope module, "SE" "Sign_Extend" 3 76, 11 12, S_0x1799ee0;
+ .timescale 0 0;
+v0x17bdba0_0 .net "data_i", 15 0, C4<zzzzzzzzzzzzzzzz>; 0 drivers
+v0x17bdc60_0 .var "data_o", 31 0;
+S_0x17bd6b0 .scope module, "Mux_ALUSrc" "MUX_2to1" 3 81, 7 12, S_0x1799ee0;
+ .timescale 0 0;
+P_0x177ecd8 .param/l "size" 7 19, +C4<0100000>;
+v0x17bd800_0 .net "data0_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x17bd8c0_0 .net "data1_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x17bd960_0 .var "data_o", 31 0;
+v0x17bda00_0 .net "select_i", 0 0, C4<z>; 0 drivers
+S_0x17bd270 .scope module, "ALU" "ALU" 3 88, 12 12, S_0x1799ee0;
+ .timescale 0 0;
+v0x17bd360_0 .net "ctrl_i", 3 0, C4<zzzz>; 0 drivers
+v0x17bd420_0 .var "result_o", 31 0;
+v0x17bd4c0_0 .net "src1_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x17bd560_0 .net "src2_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x17bd610_0 .net "zero_o", 0 0, C4<z>; 0 drivers
+S_0x17bcf80 .scope module, "Adder2" "Adder" 3 96, 5 12, S_0x1799ee0;
+ .timescale 0 0;
+v0x17bd070_0 .net "src1_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x17bd130_0 .net "src2_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x17bd1d0_0 .net "sum_o", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+S_0x17bcd30 .scope module, "Shifter" "Shift_Left_Two_32" 3 102, 13 8, S_0x1799ee0;
+ .timescale 0 0;
+v0x17bce20_0 .net "data_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x17bcee0_0 .net "data_o", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+S_0x1791be0 .scope module, "Mux_PC_Source" "MUX_2to1" 3 107, 7 12, S_0x1799ee0;
+ .timescale 0 0;
+P_0x178bf98 .param/l "size" 7 19, +C4<0100000>;
+v0x17a2b20_0 .net "data0_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x1784c60_0 .net "data1_i", 31 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x17bcbe0_0 .var "data_o", 31 0;
+v0x17bcc80_0 .net "select_i", 0 0, C4<z>; 0 drivers
+    .scope S_0x17bf9e0;
+T_0 ;
+    %wait E_0x1784e30;
+    %load/v 8, v0x17bfd10_0, 1;
+    %inv 8, 1;
+    %jmp/0xz  T_0.0, 8;
+    %ix/load 0, 32, 0;
+    %assign/v0 v0x17bfc70_0, 0, 0;
+    %jmp T_0.1;
+T_0.0 ;
+    %load/v 8, v0x17bfbd0_0, 32;
+    %ix/load 0, 32, 0;
+    %assign/v0 v0x17bfc70_0, 0, 8;
+T_0.1 ;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_0x17bf330;
+T_1 ;
+    %wait E_0x17be8c0;
+    %load/v 40, v0x17bf640_0, 32;
+    %movi 72, 4, 32;
+    %div 40, 72, 32;
+    %ix/get 3, 40, 32;
+    %load/av 8, v0x17bf460, 32;
+    %set/v v0x17bf5a0_0, 8, 32;
+    %jmp T_1;
+    .thread T_1, $push;
+    .scope S_0x17bf330;
+T_2 ;
+    %set/v v0x17bf500_0, 0, 32;
+T_2.0 ;
+    %load/v 8, v0x17bf500_0, 32;
+   %cmpi/s 8, 32, 32;
+    %jmp/0xz T_2.1, 5;
+    %ix/getv/s 3, v0x17bf500_0;
+   %jmp/1 t_0, 4;
+   %ix/load 1, 0, 0;
+   %set/av v0x17bf460, 0, 32;
+t_0 ;
+    %ix/load 0, 1, 0;
+    %load/vp0/s 8, v0x17bf500_0, 32;
+    %set/v v0x17bf500_0, 8, 32;
+    %jmp T_2.0;
+T_2.1 ;
+    %vpi_call 6 39 "$readmemb", "CO_P1_test_data1.txt", v0x17bf460;
+    %end;
+    .thread T_2;
+    .scope S_0x17be510;
+T_3 ;
+    %wait E_0x17be360;
+    %load/v 8, v0x17bee20_0, 1;
+    %mov 9, 0, 1;
+    %cmpi/u 8, 0, 2;
+    %jmp/0xz  T_3.0, 4;
+    %ix/load 3, 0, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_1 ;
+    %ix/load 3, 1, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_2 ;
+    %ix/load 3, 2, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_3 ;
+    %ix/load 3, 3, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_4 ;
+    %ix/load 3, 4, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_5 ;
+    %ix/load 3, 5, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_6 ;
+    %ix/load 3, 6, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_7 ;
+    %ix/load 3, 7, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_8 ;
+    %ix/load 3, 8, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_9 ;
+    %ix/load 3, 9, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_10 ;
+    %ix/load 3, 10, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_11 ;
+    %ix/load 3, 11, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_12 ;
+    %ix/load 3, 12, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_13 ;
+    %ix/load 3, 13, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_14 ;
+    %ix/load 3, 14, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_15 ;
+    %ix/load 3, 15, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_16 ;
+    %ix/load 3, 16, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_17 ;
+    %ix/load 3, 17, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_18 ;
+    %ix/load 3, 18, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_19 ;
+    %ix/load 3, 19, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_20 ;
+    %ix/load 3, 20, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_21 ;
+    %ix/load 3, 21, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_22 ;
+    %ix/load 3, 22, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_23 ;
+    %ix/load 3, 23, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_24 ;
+    %ix/load 3, 24, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_25 ;
+    %ix/load 3, 25, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_26 ;
+    %ix/load 3, 26, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_27 ;
+    %ix/load 3, 27, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_28 ;
+    %ix/load 3, 28, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_29 ;
+    %ix/load 3, 29, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_30 ;
+    %ix/load 3, 30, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_31 ;
+    %ix/load 3, 31, 0; address
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 0;
+t_32 ;
+    %jmp T_3.1;
+T_3.0 ;
+    %load/v 8, v0x17bea70_0, 1;
+    %jmp/0xz  T_3.2, 8;
+    %load/v 8, v0x17be700_0, 32;
+    %ix/getv 3, v0x17be640_0;
+    %jmp/1 t_33, 4;
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 8;
+t_33 ;
+    %jmp T_3.3;
+T_3.2 ;
+    %ix/getv 3, v0x17be640_0;
+    %load/av 8, v0x17beb10, 32;
+    %ix/getv 3, v0x17be640_0;
+    %jmp/1 t_34, 4;
+    %ix/load 0, 32, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x17beb10, 0, 8;
+t_34 ;
+T_3.3 ;
+T_3.1 ;
+    %jmp T_3;
+    .thread T_3;
+    .scope S_0x179a1d0;
+T_4 ;
+    %delay 5, 0;
+    %load/v 8, v0x17bff20_0, 1;
+    %inv 8, 1;
+    %set/v v0x17bff20_0, 8, 1;
+    %jmp T_4;
+    .thread T_4;
+    .scope S_0x179a1d0;
+T_5 ;
+    %vpi_call 2 33 "$dumpfile", "Single_Cycle_CPU.vcd";
+    %vpi_call 2 34 "$dumpvars";
+    %vpi_func 2 36 "$fopen", 8, 32, "CO_P1_Result.txt";
+    %set/v v0x17c0170_0, 8, 32;
+    %set/v v0x17bff20_0, 0, 1;
+    %set/v v0x17bffc0_0, 0, 1;
+    %set/v v0x17c0040_0, 0, 32;
+    %movi 8, 25, 32;
+    %set/v v0x17c00c0_0, 8, 32;
+    %delay 10, 0;
+    %set/v v0x17bffc0_0, 1, 1;
+    %delay 250, 0;
+    %vpi_call 2 42 "$fclose", v0x17c0170_0;
+    %vpi_call 2 42 "$finish";
+    %end;
+    .thread T_5;
+    .scope S_0x179a1d0;
+T_6 ;
+    %wait E_0x17561b0;
+    %load/v 8, v0x17c0040_0, 32;
+    %mov 40, 39, 1;
+    %addi 8, 1, 33;
+    %set/v v0x17c0040_0, 8, 32;
+    %load/v 8, v0x17c0040_0, 32;
+    %cmpi/u 8, 25, 32;
+    %jmp/0xz  T_6.0, 4;
+    %vpi_call 2 49 "$fdisplay", v0x17c0170_0, "r0=%d\012r1=%d\012r2=%d\012r3=%d\012r4=%d\012r5=%d\012r6=%d\012r7=%d\012r8=%d\012r9=%d\012r10=%d\012r11=%d\012r12=%d", &A<v0x17beb10, 0>, &A<v0x17beb10, 1>, &A<v0x17beb10, 2>, &A<v0x17beb10, 3>, &A<v0x17beb10, 4>, &A<v0x17beb10, 5>, &A<v0x17beb10, 6>, &A<v0x17beb10, 7>, &A<v0x17beb10, 8>, &A<v0x17beb10, 9>, &A<v0x17beb10, 10>, &A<v0x17beb10, 11>, &A<v0x17beb10, 12>;
+T_6.0 ;
+    %jmp T_6;
+    .thread T_6;
+# The file index is used to find the file name in the following table.
+:file_names 14;
+    "N/A";
+    "<interactive>";
+    "Test_Bench.v";
+    "Simple_Single_CPU.v";
+    "ProgramCounter.v";
+    "Adder.v";
+    "Instr_Memory.v";
+    "MUX_2to1.v";
+    "Reg_File.v";
+    "Decoder.v";
+    "ALU_Ctrl.v";
+    "Sign_Extend.v";
+    "ALU.v";
+    "Shift_Left_Two_32.v";
