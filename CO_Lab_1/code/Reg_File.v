@@ -1,3 +1,13 @@
+//Subject:     CO project 1 - Register File
+//--------------------------------------------------------------------------------
+//Version:     1
+//--------------------------------------------------------------------------------
+//Writer:
+//----------------------------------------------
+//Date:
+//----------------------------------------------
+//Description:
+//--------------------------------------------------------------------------------
 module Reg_File(
     clk_i,
 	  rst_i,
@@ -8,7 +18,7 @@ module Reg_File(
     RegWrite_i,
     RSdata_o,
     RTdata_o
-);
+    );
 
 //I/O ports
 input           clk_i;
@@ -46,8 +56,8 @@ always @( posedge rst_i or posedge clk_i  ) begin
     else begin
         if(RegWrite_i)
             Reg_File[RDaddr_i] <= RDdata_i;
-		else
-		    Reg_File[RDaddr_i] <= Reg_File[RDaddr_i];
+    		else
+    		    Reg_File[RDaddr_i] <= Reg_File[RDaddr_i];
 	end
 end
 
