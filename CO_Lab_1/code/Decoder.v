@@ -1,12 +1,4 @@
-//Subject:     CO project 1 - Decoder
-//--------------------------------------------------------------------------------
-//Version:     1
-//--------------------------------------------------------------------------------
-//Writer:
-//----------------------------------------------
-//Date:
-//----------------------------------------------
-//Description:
+//Description: Decoder(Controller)
 //--------------------------------------------------------------------------------
 
 module Decoder(instr_op_i, RegWrite_o, ALU_op_o, ALUSrc_o, RegDst_o);
@@ -29,6 +21,7 @@ module Decoder(instr_op_i, RegWrite_o, ALU_op_o, ALUSrc_o, RegDst_o);
 
 
   //Main function
+  //ALU control signal
   assign ALU_op_o = (instr_op_i==6'b000000) ? 3'b000 :  // 0.R-type
                     (instr_op_i==6'b001000) ? 3'b001 :  // 1.addi
                     (instr_op_i==6'b001011) ? 3'b010 :  // 2.sltiu

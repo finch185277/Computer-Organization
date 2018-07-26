@@ -1,12 +1,4 @@
-//Subject:     CO project 1 - Instruction Memory
-//--------------------------------------------------------------------------------
-//Version:     1
-//--------------------------------------------------------------------------------
-//Writer:
-//----------------------------------------------
-//Date:
-//----------------------------------------------
-//Description:
+//Description:Instruction Memory
 //--------------------------------------------------------------------------------
 
 module Instr_Memory(pc_addr_i, instr_o);
@@ -33,6 +25,6 @@ module Instr_Memory(pc_addr_i, instr_o);
 	initial begin
 	    for ( i=0; i<32; i=i+1 )
 		    Instr_Mem[i] = 32'b0;
-	    $readmemb("CO_P1_test_data1.txt", Instr_Mem);  //Read instruction from "CO_P1_test_data1.txt"
+	    $readmemb("CO_P1_test_data3.txt", Instr_Mem);  //Read instruction from "CO_P1_test_data1.txt"
 	end
 endmodule
