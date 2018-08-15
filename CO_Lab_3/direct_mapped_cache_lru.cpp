@@ -1,77 +1,75 @@
+#include <climits>
+#include <cmath>
+#include <cstdio>
 #include <iostream>
-#include <math.h>
-#include <stdio.h>
-
-using namespace std;
 
 struct cache_content {
-  bool v;
+  bool v; // verify bit
   unsigned int tag;
-  unsigned int last;
+  unsigned int time_stamp; // time stamp for last use
 };
 
 const int K = 1024;
 
-void simulate(int cache_size, int way) {
+void simulate(int cache_size, int ways) {
   const int block_size = 64;
   unsigned int tag, index, x;
+  unsigned int total = 0, miss = 0;
 
-  int offset_bit = (int)log2(block_size);
-  int index_bit = (int)log2((cache_size / block_size) / way);
-  int index_size = (cache_size / block_size) / way;
+  int offset_bit = log2(block_size); // 2^(offset_bit) bytes per one block
+  int index_bit = log2((cache_size / block_size) / ways);
+  int index_size = (cache_size / block_size) / ways;
 
-  cache_content cache[index_size][way];
+  cache_content cache[index_size][ways];
 
-  // printf("cache line: %d\n", line);
-  for (int i = 0; i < index_size; i++)
-    for (int j = 0; j < way; j++)
-      cache[i][j].v = 0;
+  for (int i = 0; i < index_size; i++) // instart, every line is empty
+    for (int j = 0; j < ways; j++)
+      cache[i][j].v = false;
 
-  FILE *fp = fopen("RADIX.txt", "r"); // read file
-  int total = 0, miss = 0;
+  FILE *fp = std::fopen("RADIX.txt", "r"); // read file
 
   while (fscanf(fp, "%x", &x) != EOF) {
-    // printf("%x ", x);
-    index = (x >> offset_bit) & (index_size - 1);
-    tag = x >> (index_bit + offset_bit);
-    bool done = false;
-    for (int i = 0; i < way; i++) {
+    index = (x >> offset_bit) & (index_size - 1); // filter the index bits
+    tag = x >> (index_bit + offset_bit);          // filter the tag bits
+    bool hit = false, empty = false;
+
+    for (int i = 0; i < ways; i++) {
       if (cache[index][i].v && cache[index][i].tag == tag) {
-        // hit
-        cache[index][i].last = total;
-        done = true;
+        cache[index][i].time_stamp = total;
+        hit = true; // hit
         break;
       }
     }
-    if (!done)
+
+    if (hit == false) { // miss
       miss++;
-    if (!done) {
-      for (int i = 0; i < way; i++) {
+
+      for (int i = 0; i < ways; i++) {
         if (cache[index][i].v == false) {
+          empty = true; // some idle space for new data
           cache[index][i].v = true;
           cache[index][i].tag = tag;
-          cache[index][i].last = total;
-          done = true;
-          break;
+          cache[index][i].time_stamp = total;
         }
       }
-    }
-    if (!done) {
-      unsigned int replace = 0x3f3f3f3f;
-      int replace_way;
-      for (int i = 0; i < way; i++) {
-        if (cache[index][i].last < replace) {
-          replace_way = i;
-          replace = cache[index][i].last;
+
+      if (empty == false) { // there are no idle space
+        int earliest = INT_MAX, LRU = -1;
+        for (int i = 0; i < ways; i++) { // find LRU block
+          if (cache[index][i].time_stamp <= earliest) {
+            earliest = cache[index][i].time_stamp;
+            LRU = i;
+          }
         }
+
+        cache[index][LRU].tag = tag;
+        cache[index][LRU].time_stamp = total;
       }
-      cache[index][replace_way].tag = tag;
-      cache[index][replace_way].last = total;
     }
-    total++;
+    total++; // add time stamp
   }
-  printf("Cache size: %7d way: %7d ", cache_size, way);
-  printf("miss rate: %.6f%%\n", (double(miss) * 100) / double(total));
+  std::cout << "Cache size: " << cache_size / 1024 << 'K' << " ways: " << ways;
+  std::cout << " miss rate: " << double(miss) * 100 / double(total) << "\n";
   fclose(fp);
 }
 
