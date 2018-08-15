@@ -22,15 +22,16 @@ void simulate(int cache_size, int ways) {
 
   cache_content cache[index_size][ways];
 
-  for (int i = 0; i < index_size; i++) // instart, every line is empty
+  for (int i = 0; i < index_size; i++) // every line is empty
     for (int j = 0; j < ways; j++)
       cache[i][j].v = false;
 
-  FILE *fp = std::fopen("RADIX.txt", "r"); // read file
+  FILE *fp = std::fopen("LU.txt", "r");
+  // FILE *fp = std::fopen("RADIX.txt", "r");
 
   while (fscanf(fp, "%x", &x) != EOF) {
-    index = (x >> offset_bit) & (index_size - 1); // filter the index bits
-    tag = x >> (index_bit + offset_bit);          // filter the tag bits
+    index = (x >> offset_bit) & (index_size - 1); // for the index bits
+    tag = x >> (index_bit + offset_bit);          // for the tag bits
     bool hit = false, empty = false;
 
     for (int i = 0; i < ways; i++) {
@@ -46,14 +47,14 @@ void simulate(int cache_size, int ways) {
 
       for (int i = 0; i < ways; i++) {
         if (cache[index][i].v == false) {
-          empty = true; // some idle space for new data
+          empty = true; // empty space for new data
           cache[index][i].v = true;
           cache[index][i].tag = tag;
           cache[index][i].time_stamp = total;
         }
       }
 
-      if (empty == false) { // there are no idle space
+      if (empty == false) { // no empty space
         int earliest = INT_MAX, LRU = -1;
         for (int i = 0; i < ways; i++) { // find LRU block
           if (cache[index][i].time_stamp <= earliest) {
